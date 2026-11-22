@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сандар сыры — интерактивті зерттеу жобасы</title>
+<style>
+:root{--bg:#f3f6fc;--card:#fff;--ink:#17233d;--muted:#64718b;--accent:#6257d9;--accent2:#16a6a1;--line:#e3e8f2;--soft:#eef0ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(125deg,#202c58,#6257d9 65%,#16a6a1);color:white;padding:42px 20px 34px}
+.hero{max-width:1100px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;opacity:.8}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:.35em 0}.hero p{max-width:760px;color:#edf0ff}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);overflow:auto;white-space:nowrap;padding:10px max(16px,calc((100% - 1100px)/2))}
+nav a{display:inline-block;text-decoration:none;color:#35415c;padding:8px 12px;border-radius:9px;font-size:.9rem}nav a:hover{background:var(--soft);color:var(--accent)}
+main{max-width:1100px;margin:28px auto;padding:0 18px 60px}.intro{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:24px}
+.section-title{margin:34px 0 14px}.section-title small{color:var(--accent);font-weight:700;letter-spacing:.1em}.section-title h2{margin:4px 0;font-size:1.65rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 5px 18px #26365b08}
+.card h3{margin:0 0 8px}.card p{color:var(--muted);margin:7px 0 13px}.wide{grid-column:1/-1}
+label{display:block;font-weight:650;margin:12px 0 5px}input,select,button{font:inherit}input[type=number],input[type=text],select{width:100%;padding:10px 12px;border:1px solid #ccd4e4;border-radius:9px;background:#fff;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent)}button{border:0;border-radius:9px;background:var(--accent);color:#fff;padding:10px 15px;cursor:pointer;font-weight:650;margin-top:10px}button.secondary{background:#e9ebff;color:#433bb0}button:hover{filter:brightness(.96)}
+.result{margin-top:13px;padding:13px 15px;border-radius:10px;background:#f0f7f7;border-left:4px solid var(--accent2);min-height:48px;overflow-wrap:anywhere}.muted{color:var(--muted);font-size:.9rem}.pill{display:inline-block;background:var(--soft);color:#4b43b5;border-radius:20px;padding:3px 9px;font-size:.8rem;font-weight:700}
+.visual{background:#f7f8ff;border-radius:12px;padding:14px;margin-top:12px;text-align:center;min-height:70px}
+.big{font-size:1.7rem;font-weight:800;color:var(--accent)}.formula{font-family:Georgia,serif;background:#f7f8ff;padding:8px 12px;border-radius:8px;display:inline-block}
+canvas{max-width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:12px}
+footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.card{padding:16px}header{padding-top:30px}}
+</style>
+</head>
+<body>
+<header><div class="hero">
+<div class="eyebrow">Зерттеу жобасы · интерактивті жұмыс</div>
+<h1>САНДАР СЫРЫ</h1>
+<p>Сандардың тарихын, қазақ дүниетанымындағы орнын және математикадағы таңғажайып қасиеттерін тәжірибе арқылы зертте.</p>
+<span class="pill">Өзгертіп көр · Есепте · Салыстыр · Қорытынды жаса</span>
+</div></header>
+<nav>
+<a href="#history">Санау тарихы</a><a href="#kazakh">Қазақ өлшемдері</a><a href="#sacred">Киелі сандар</a><a href="#pi">π саны</a><a href="#fib">Фибоначчи</a><a href="#euler">e саны</a><a href="#prime">Жай сандар</a><a href="#perfect">Кемел сандар</a><a href="#extras">Қосымша</a><a href="#conclusion">Қорытынды</a>
+</nav>
+<main>
+<div class="intro">
+<h2>Жобаның мақсаты</h2>
+<p>Сандардың шығу тарихын, халық дүниетанымындағы киелі ұғымдарды және математикадағы ерекше сандық заңдылықтарды зерттеу. Төмендегі әр бөлімде мәндерді өзгертіп, нәтижені бірден бақылауға болады.</p>
+<p><b>Зерттеу әдістері:</b> салыстыру, есептеу, бақылау, модельдеу және нәтижені талдау.</p>
+</div>
+
+<div class="section-title" id="history"><small>II БӨЛІМ · 1</small><h2>Сандардың шығу тарихы</h2></div>
+<div class="grid">
+<section class="card"><h3>1. Санау жүйелерін салыстыру</h3><p>Бір санды ондық, екілік және рим цифрларымен көрсет. Сан өзгерген сайын жазылу тәсілдерінің айырмасын байқа.</p>
+<label for="numConvert">Зерттелетін сан (1–3999)</label><input id="numConvert" type="number" min="1" max="3999" value="49">
+<button onclick="convertNumber()">Салыстыру</button>
+<div class="result" id="convertResult">Нәтиже осы жерде көрсетіледі.</div>
+<p class="muted">Ескерту: рим цифрлары позициялық жүйе емес; ал екілік жүйеде тек 0 және 1 цифрлары қолданылады.</p></section>
+<section class="card"><h3>2. Нөлдің маңызы</h3><p>Позициялық жазуда нөл разрядтың бос екенін көрсетеді. Мысалы, 205 пен 25 сандарының айырмасын тексер.</p>
+<label>Бірінші сан</label><input id="zeroA" type="number" value="205">
+<label>Екінші сан</label><input id="zeroB" type="number" value="25">
+<button onclick="compareZero()">Салыстыру</button><div class="result" id="zeroResult">Сандардың айырмасы көрсетіледі.</div></section>
+</div>
+
+<div class="section-title" id="kazakh"><small>II БӨЛІМ · 2</small><h2>Қазақтың байырғы есептеу және өлшем жүйесі</h2></div>
+<div class="grid">
+<section class="card"><h3>3. Дене өлшемдерімен ұзындықты есептеу</h3><p>Елі, сүйем, қарыс, құлаш сияқты өлшемдер адамның денесіне негізделген. Төмендегі мәндер — демонстрациялық жуық шамалар; нақты өлшем адамға қарай өзгереді.</p>
+<label>Өлшем түрі</label><select id="bodyUnit"><option value="1.8">Елі (шартты 1,8 см)</option><option value="18">Сүйем (шартты 18 см)</option><option value="20">Қарыс (шартты 20 см)</option><option value="160">Құлаш (шартты 160 см)</option></select>
+<label>Өлшем саны</label><input id="bodyCount" type="number" value="5" min="0">
+<button onclick="bodyMeasure()">Ұзындықты есептеу</button><div class="result" id="bodyResult">Нәтиже сантиметр және метрмен шығады.</div></section>
+<section class="card"><h3>4. Уақытты дәстүрлі атаулармен тану</h3><p>Қазақ халқы тәуліктің бөліктерін табиғаттағы күннің орнына қарап атаған. Сағатты өзгертіп, жуық атауын анықта.</p>
+<label>Тәулік уақыты (0–23)</label><input id="hour" type="range" min="0" max="23" value="14" oninput="timeLabel()"><div class="big" id="hourShow">14:00</div>
+<div class="result" id="timeResult">Бесін мезгілі</div><p class="muted">Бұл — уақыт атауларын түсіндіруге арналған жуық сәйкестік.</p></section>
+</div>
+
+<div class="section-title" id="sacred"><small>II БӨЛІМ · 3–4</small><h2>Қазақ дүниетанымындағы киелі сандар және мақал-мәтелдер</h2></div>
+<div class="grid">
+<section class="card"><h3>5. Киелі санды зертте</h3><p>Санды таңда. Оның халық танымындағы мысалдарын ашып, өз түсіндірмеңді қос.</p>
+<label>Санды таңда</label><select id="sacredNumber" onchange="sacredInfo()"><option value="3">3 саны</option><option value="7" selected>7 саны</option><option value="9">9 саны</option><option value="40">40 саны</option></select>
+<div class="result" id="sacredResult">Жеті ата, жеті қазына, жеті жарғы...</div>
+<label>Менің түсіндірмем</label><input id="sacredNote" type="text" placeholder="Бұл сан нені білдіреді деп ойлайсың?">
+<button class="secondary" onclick="saveNote()">Түсіндірмені қосу</button><div class="muted" id="noteResult"></div></section>
+<section class="card"><h3>6. Мақалдағы санды тап</h3><p>Бос орынды дұрыс санмен толтыр.</p>
+<div class="formula" id="proverbText">Жеті рет өлшеп, ___ рет кес.</div>
+<label>Жауап</label><select id="proverbAnswer"><option value="">Санды таңда</option><option>1</option><option>3</option><option>7</option><option>9</option></select>
+<button onclick="checkProverb()">Тексеру</button><div class="result" id="proverbResult">Мақалдың мағынасын да түсіндіріп көр.</div></section>
+</div>
+
+<div class="section-title" id="pi"><small>III БӨЛІМ · 1</small><h2>Пи (π) саны</h2></div>
+<div class="grid">
+<section class="card"><h3>7. Шеңбер ұзындығын модельдеу</h3><p>Диаметрді өзгерткенде шеңбер ұзындығы қалай өзгеретінін бақыла. Формула: C = πd.</p>
+<label>Диаметр: <span id="diamLabel">10</span> см</label><input id="diameter" type="range" min="1" max="30" value="10" oninput="piCalc()">
+<div class="visual"><canvas id="circleCanvas" width="330" height="180"></canvas></div>
+<div class="result" id="piResult">C ≈ 31,42 см</div></section>
+<section class="card"><h3>8. π мәнін жуықтау</h3><p>Шеңбердің ұзындығы мен диаметрін өзің енгіз. Қатынас π санына жақындай ма?</p>
+<label>Шеңбер ұзындығы C (см)</label><input id="circumference" type="number" value="31.4" step="0.01">
+<label>Диаметр d (см)</label><input id="piDiameter" type="number" value="10" step="0.01">
+<button onclick="estimatePi()">π-ді есептеу</button><div class="result" id="estimateResult">C / d = 3,14</div></section>
+</div>
+
+<div class="section-title" id="fib"><small>III БӨЛІМ · 2</small><h2>Фибоначчи тізбегі және Алтын қима (φ)</h2></div>
+<div class="grid">
+<section class="card"><h3>9. Фибоначчи сандарын құрастыр</h3><p>Тізбектің әр мүшесі алдыңғы екі мүшенің қосындысына тең. Қанша мүшені көрсететінін таңда.</p>
+<label>Мүшелер саны: <span id="fibCountLabel">10</span></label><input id="fibCount" type="range" min="3" max="18" value="10" oninput="fibCalc()">
+<div class="result" id="fibResult"></div>
+<div class="muted" id="fibRatio"></div></section>
+<section class="card"><h3>10. Алтын қима пропорциясы</h3><p>Ұзын және қысқа бөліктердің қатынасын өзгертіп, φ ≈ 1,618 мәнімен салыстыр.</p>
+<label>Ұзын бөлік</label><input id="longPart" type="range" min="10" max="100" value="62" oninput="goldenCalc()">
+<label>Қысқа бөлік</label><input id="shortPart" type="range" min="10" max="100" value="38" oninput="goldenCalc()">
+<div class="visual"><div id="goldBar" style="height:28px;display:flex;border-radius:7px;overflow:hidden"><div style="background:#6257d9;width:62%"></div><div style="background:#16a6a1;width:38%"></div></div></div>
+<div class="result" id="goldResult"></div><p class="muted">Фибоначчи қатынастары алтын қимаға жақындайды, бірақ табиғаттағы барлық спираль алтын спираль емес.</p></section>
+</div>
+
+<div class="section-title" id="euler"><small>III БӨЛІМ · 3</small><h2>Эйлер саны (e) және оның формуласы</h2></div>
+<div class="grid">
+<section class="card"><h3>11. Үздіксіз күрделі өсім моделі</h3><p>Бастапқы салым мен уақытты өзгертіп, үздіксіз күрделі пайыз формуласы бойынша нәтижені есепте: A = P·e<sup>rt</sup>.</p>
+<label>Бастапқы сома P (теңге)</label><input id="principal" type="number" value="100000" min="0">
+<label>Жылдық өсім мөлшерлемесі r (%)</label><input id="rate" type="number" value="5" step="0.1">
+<label>Уақыт t (жыл)</label><input id="years" type="number" value="3" step="0.5">
+<button onclick="eulerCalc()">Есептеу</button><div class="result" id="eulerResult">Нәтиже көрсетіледі.</div>
+<p class="muted">Бұл — математикалық модель. Нақты банк өнімі комиссия, салық және өзге шарттарға тәуелді.</p></section>
+<section class="card"><h3>12. Эйлердің әйгілі тепе-теңдігі</h3><p class="formula">e<sup>iπ</sup> + 1 = 0</p>
+<p>Бұл теңдік бес маңызды математикалық тұрақтыны біріктіреді: e, i, π, 1 және 0.</p>
+<label>Тұрақтыларды таңда</label><select id="constant" onchange="constantInfo()"><option value="e">e ≈ 2,71828</option><option value="pi">π ≈ 3,14159</option><option value="i">i — жорамал бірлік</option><option value="one">1 — бірлік</option><option value="zero">0 — нөл</option></select>
+<div class="result" id="constantResult">e — натурал логарифмнің негізі.</div></section>
+</div>
+
+<div class="section-title" id="prime"><small>III БӨЛІМ · 4</small><h2>Жай сандар</h2></div>
+<div class="grid">
+<section class="card"><h3>13. Жай сандарды іздеу</h3><p>Шекті өзгертіп, сол санға дейінгі жай сандарды тап. Жай сан тек 1-ге және өзіне бөлінеді.</p>
+<label>Іздеу шегі (2–300)</label><input id="primeLimit" type="range" min="2" max="300" value="50" oninput="primeCalc()"><div class="big" id="primeLimitLabel">50</div>
+<div class="result" id="primeResult"></div></section>
+<section class="card"><h3>14. Егіз жай сандар</h3><p>Айырмасы 2-ге тең жай сандар жұптарын көрсет.</p>
+<label>Іздеу шегі</label><input id="twinLimit" type="number" min="5" max="500" value="100">
+<button onclick="twinCalc()">Егіз жұптарды табу</button><div class="result" id="twinResult"></div>
+<p class="muted">Егіз жай сандардың шексіз көп екені әзірге дәлелденбеген.</p></section>
+</div>
+
+<div class="section-title" id="perfect"><small>III БӨЛІМ · 5</small><h2>Кемел сандар</h2></div>
+<div class="grid">
+<section class="card"><h3>15. Санның кемел екенін тексер</h3><p>Өзінен басқа оң бөлгіштерінің қосындысын есепте. Қосынды санның өзіне тең болса, ол — кемел сан.</p>
+<label>Натурал сан</label><input id="perfectNum" type="number" min="2" value="28">
+<button onclick="perfectCalc()">Тексеру</button><div class="result" id="perfectResult">Мысалы, 28 санының бөлгіштері: 1, 2, 4, 7, 14.</div></section>
+<section class="card"><h3>16. Кемел сандарды салыстыру</h3><p>Белгілі алғашқы кемел сандардың бірін таңда.</p>
+<label>Сан</label><select id="perfectSelect" onchange="perfectPreset()"><option>6</option><option selected>28</option><option>496</option><option>8128</option></select>
+<div class="result" id="perfectPresetResult">Бөлгіштер қосындысы 28-ге тең.</div></section>
+</div>
+
+<div class="section-title" id="extras"><small>ҚОСЫМША ЗЕРТТЕУ</small><h2>Қызықты сандық заңдылықтар</h2></div>
+<div class="grid">
+<section class="card"><h3>17. Бенфорд заңы</h3><p>Көптеген табиғи деректер жиынтығында бірінші цифрдың 1 болу ықтималдығы жоғары. Формула: P(d)=log<sub>10</sub>(1+1/d).</p>
+<label>Бірінші цифрды таңда</label><select id="benfordDigit" onchange="benfordCalc()"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select>
+<div class="result" id="benfordResult">1 цифрының ықтималдығы ≈ 30,1%.</div></section>
+<section class="card"><h3>18. Музыкадағы сандық қатынас</h3><p>Ішектің ұзындығы екі есе қысқарса, тербеліс жиілігі екі есе артып, дыбыс бір октава жоғарылайды.</p>
+<label>Бастапқы жиілік (Гц)</label><input id="frequency" type="number" value="220" min="20" max="2000">
+<label>Ішек ұзындығының үлесі: <span id="stringLabel">1/2</span></label><input id="stringRatio" type="range" min="1" max="4" value="2" oninput="musicCalc()">
+<div class="result" id="musicResult">Ішек ұзындығы 1/2 болса, жиілік 440 Гц.</div></section>
+</div>
+
+<div class="section-title" id="conclusion"><small>III БӨЛІМ · ҚОРЫТЫНДЫ</small><h2>Зерттеу қорытындысы</h2></div>
+<div class="card wide">
+<p>Интерактивті тәжірибелер сандардың тек есептеу құралы емес, тарихпен, мәдениетпен, табиғатпен және ғылыммен тығыз байланысты екенін көрсетеді. Ежелгі санау жүйелерінен бастап π, φ, e, жай және кемел сандарға дейінгі мысалдар математиканың заңдылықтарын тәжірибе арқылы түсінуге мүмкіндік береді.</p>
+<h3>Өзіңді тексер: шағын қорытынды тест</h3>
+<div id="quiz">
+<p><b>1.</b> Шеңбер ұзындығының диаметрге қатынасы қандай тұрақтыға тең?</p>
+<label><input type="radio" name="q1" value="a"> e</label><label><input type="radio" name="q1" value="b"> π</label><label><input type="radio" name="q1" value="c"> φ</label>
+<p><b>2.</b> Қатар тұрған Фибоначчи сандарының қатынасы қандай санға жақындайды?</p>
+<label><input type="radio" name="q2" value="a"> 1,618...</label><label><input type="radio" name="q2" value="b"> 2,718...</label><label><input type="radio" name="q2" value="c"> 3,14...</label>
+<p><b>3.</b> 6 саны неге кемел сан?</p>
+<label><input type="radio" name="q3" value="a"> Жұп болғандықтан</label><label><input type="radio" name="q3" value="b"> Бөлгіштерінің қосындысы 6 болғандықтан</label><label><input type="radio" name="q3" value="c"> Жай сан болғандықтан</label>
+<button onclick="gradeQuiz()">Тест нәтижесін көру</button><div class="result" id="quizResult">Жауаптарыңды таңда.</div>
+</div>
+<p class="muted">Жобаға ұсыныс: әр интерактивті бөлімде бастапқы мән мен өзгертілген мәнді салыстырып, «Не байқадым?», «Неліктен бұлай болды?» деген екі сұраққа жауап жаз.</p>
+</div>
+</main>
+<footer>«Сандар сыры» · Интерактивті математикалық зерттеу жобасы</footer>
+<script>
+const fmt=(n,d=2)=>Number(n).toLocaleString('kk-KZ',{maximumFractionDigits:d});
+function roman(n){let vals=[1000,900,500,400,100,90,50,40,10,9,5,4,1],syms=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'],s='';for(let i=0;i<vals.length;i++)while(n>=vals[i]){s+=syms[i];n-=vals[i]}return s}
+function convertNumber(){let n=+document.getElementById('numConvert').value;if(!Number.isInteger(n)||n<1||n>3999){document.getElementById('convertResult').textContent='1 мен 3999 аралығындағы бүтін санды енгіз.';return}document.getElementById('convertResult').innerHTML=`<b>Ондық жүйе:</b> ${n}<br><b>Екілік жүйе:</b> ${n.toString(2)}<br><b>Рим цифры:</b> ${roman(n)}`}
+function compareZero(){let a=+zeroA.value,b=+zeroB.value;zeroResult.innerHTML=`${a} − ${b} = <b>${a-b}</b>. ${a} санындағы нөл жүздіктер разрядындағы мәнді сақтайды.`}
+function bodyMeasure(){let cm=+bodyUnit.value*+bodyCount.value;bodyResult.innerHTML=`Жалпы ұзындық: <b>${fmt(cm)} см</b> = <b>${fmt(cm/100)} м</b>. Өлшемдер шартты алынған.`}
+function timeLabel(){let h=+hour.value;hourShow.textContent=String(h).padStart(2,'0')+':00';let t=h<5?'Түн':h<7?'Таң':h<9?'Сәске':h<12?'Түс алдындағы мезгіл':h<15?'Түс / бесін':h<18?'Екінді / намаздыгер':h<20?'Ақшам': 'Құптан / түн';timeResult.textContent='Жуық атауы: '+t}
+function sacredInfo(){let x=sacredNumber.value,info={'3':'Үш жұрт, үш би, үш жүз; үш саны тұтастық пен үштаған ұғымын білдіреді.','7':'Жеті ата, жеті қазына, жеті жарғы; жеті саны толықтық пен дәстүрлі жүйені білдіреді.','9':'Тоғыз жол, тоғыз тоғыз; тоғыз саны сый-құрмет пен молшылық ұғымдарында кездеседі.','40':'Қырқынан шығару, қырық күн шілде; қырық саны өтпелі кезең мен толысуды білдіретін ұғымдарда қолданылады.'};sacredResult.textContent=info[x]}
+function saveNote(){noteResult.textContent='Сенің түсіндірмең: '+(sacredNote.value.trim()||'Әзірге жазылмады.')}
+function checkProverb(){proverbResult.textContent=proverbAnswer.value==='1'?'Дұрыс! «Жеті рет өлшеп, бір рет кес» — істі бастамас бұрын мұқият ойлан деген мағына береді.':'Қайта байқап көр. Мақалдың дұрыс нұсқасы: «Жеті рет өлшеп, бір рет кес». '}
+function piCalc(){let d=+diameter.value;diamLabel.textContent=d;piResult.innerHTML=`C = π × ${d} ≈ <b>${fmt(Math.PI*d)} см</b>. Диаметр екі есе артса, шеңбер ұзындығы да екі есе артады.`;let c=document.getElementById('circleCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);let r=Math.min(68,d*4.3);ctx.beginPath();ctx.arc(100,90,r,0,Math.PI*2);ctx.strokeStyle='#6257d9';ctx.lineWidth=3;ctx.stroke();ctx.beginPath();ctx.moveTo(100-r,90);ctx.lineTo(100+r,90);ctx.strokeStyle='#16a6a1';ctx.stroke();ctx.fillStyle='#17233d';ctx.font='14px sans-serif';ctx.fillText('d = '+d+' см',215,90);ctx.fillText('C ≈ '+fmt(Math.PI*d),215,115)}
+function estimatePi(){let c=+circumference.value,d=+piDiameter.value;estimateResult.textContent=d>0?`C / d = ${fmt(c/d,6)}. Нақты π ≈ 3,141593. Айырмасы: ${fmt(Math.abs(c/d-Math.PI),6)}.`:'Диаметр нөлден үлкен болуы керек.'}
+function fibCalc(){let n=+fibCount.value;fibCountLabel.textContent=n;let a=[0,1];while(a.length<n)a.push(a.at(-1)+a.at(-2));fibResult.textContent=a.slice(0,n).join(', ');let ratio=a[n-1]/a[n-2];fibRatio.textContent=`Соңғы екі мүшенің қатынасы: ${a[n-1]} / ${a[n-2]} ≈ ${fmt(ratio,8)}. φ ≈ 1,61803399.`}
+function goldenCalc(){let a=+longPart.value,b=+shortPart.value;goldBar.innerHTML=`<div style="background:#6257d9;width:${a/(a+b)*100}%"></div><div style="background:#16a6a1;width:${b/(a+b)*100}%"></div>`;goldResult.innerHTML=`Ұзын/қысқа қатынасы = <b>${fmt(a/b,5)}</b>. Алтын қима φ ≈ 1,61803. ${Math.abs(a/b-1.6180339887)<.03?'Қатынас алтын қимаға жақын!':'Мәндерді өзгертіп, 1,618-ге жақындат.'}`}
+function eulerCalc(){let P=+principal.value,r=+rate.value/100,t=+years.value;if(P<0||!Number.isFinite(r*t)){eulerResult.textContent='Мәндерді тексер.';return}let A=P*Math.exp(r*t);eulerResult.innerHTML=`A = P·e<sup>rt</sup> = ${fmt(P,0)} × e<sup>${fmt(r,4)} × ${fmt(t,2)}</sup><br>Қорытынды сома: <b>${fmt(A,2)} теңге</b><br>Өсім: ${fmt(A-P,2)} теңге.`}
+function constantInfo(){let m={e:'e — натурал логарифмнің негізі, шамамен 2,71828.',pi:'π — шеңбер ұзындығының диаметрге қатынасы, шамамен 3,14159.',i:'i — жорамал бірлік; i² = −1.',one:'1 — көбейтудің бейтарап элементі: кез келген санды 1-ге көбейтсе, өзі шығады.',zero:'0 — қосу амалының бейтарап элементі; санға 0 қосса, сан өзгермейді.'};constantResult.textContent=m[constant.value]}
+function isPrime(n){if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true}
+function primeCalc(){let lim=+primeLimit.value,a=[];for(let i=2;i<=lim;i++)if(isPrime(i))a.push(i);primeLimitLabel.textContent=lim;primeResult.innerHTML=`${lim}-ге дейін <b>${a.length}</b> жай сан бар:<br>${a.join(', ')}`}
+function twinCalc(){let n=Math.min(500,Math.max(5,+twinLimit.value||5)),a=[];for(let i=2;i+2<=n;i++)if(isPrime(i)&&isPrime(i+2))a.push(`(${i}, ${i+2})`);twinResult.innerHTML=a.length?`Табылған жұптар (${a.length}): ${a.join(', ')}`:'Бұл аралықта жұп табылмады.'}
+function properDivisors(n){let a=[];for(let i=1;i<n;i++)if(n%i===0)a.push(i);return a}
+function perfectCalc(){let n=+perfectNum.value;if(!Number.isInteger(n)||n<2||n>100000){perfectResult.textContent='2 мен 100000 аралығындағы бүтін сан енгіз.';return}let a=properDivisors(n),s=a.reduce((x,y)=>x+y,0);perfectResult.innerHTML=`Бөлгіштері: ${a.join(', ')||'жоқ'}<br>Қосындысы: <b>${s}</b><br>${s===n?'Бұл — кемел сан!':s<n?'Бұл — кем емес, кем сан (жеткіліксіз).':'Бұл — артық сан.'}`}
+function perfectPreset(){perfectNum.value=perfectSelect.value;perfectCalc();perfectPresetResult.textContent=`${perfectSelect.value} санының өзінен басқа бөлгіштерінің қосындысы өзіне тең.`}
+function benfordCalc(){let d=+benfordDigit.value,p=Math.log10(1+1/d)*100;benfordResult.innerHTML=`Бірінші цифр ${d} болу ықтималдығы: <b>${fmt(p,2)}%</b>. ${d===1?'Бұл шамамен 30,1% — ең жоғары көрсеткіш.':''}`}
+function musicCalc(){let f=+frequency.value,k=+stringRatio.value;stringLabel.textContent=`1/${k}`;musicResult.innerHTML=`Ішек ұзындығының үлесі: 1/${k}. Жиілік кері пропорционал: f₂ = ${fmt(f)} × ${k} = <b>${fmt(f*k)} Гц</b>.`}
+function gradeQuiz(){let answers={q1:'b',q2:'a',q3:'b'},score=0;for(let q in answers){let v=document.querySelector(`input[name="${q}"]:checked`);if(v&&v.value===answers[q])score++}quizResult.innerHTML=`Нәтиже: <b>${score}/3</b>. ${score===3?'Өте жақсы! Барлық жауап дұрыс.':'Қателерді қарап, бөлімдерді қайта зерттеп көр.'}`}
+convertNumber();compareZero();bodyMeasure();timeLabel();sacredInfo();piCalc();estimatePi();fibCalc();goldenCalc();constantInfo();primeCalc();perfectPreset();benfordCalc();musicCalc();
+</script>
+</body></html>
